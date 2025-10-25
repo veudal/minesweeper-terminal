@@ -1,49 +1,45 @@
-# Makefile for Minesweeper
-
+# Minesweeper Makefile
 CC = gcc
-CFLAGS = -DNCURSES_WIDECHAR=1
-LIBS = -lncursesw
+CFLAGS = -lncursesw -DNCURSES_WIDECHAR=1
 TARGET = ms
+INSTALL_DIR = /usr/bin
 SRC = minesweeper.c
-PREFIX = $(HOME)/.local/bin
 
-all: $(TARGET)
+# Colors
+GREEN = \033[0;32m
+BLUE = \033[0;34m
+CYAN = \033[0;36m
+BOLD = \033[1m
+RESET = \033[0m
 
-$(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(TARGET)
+.PHONY: all install clean help
 
-install: all
-	@mkdir -p $(PREFIX)
-	@cp $(TARGET) $(PREFIX)
-	@echo "Installed $(TARGET) to $(PREFIX)"
+all: install
 
-	# Add PREFIX to PATH for bash, zsh, fish, and POSIX shells
-	@echo "Adding $(PREFIX) to your shell PATH if not already present..."
-	@if [ -n "$$BASH_VERSION" ]; then \
-	    SHELLRC=~/.bashrc; \
-	elif [ -n "$$ZSH_VERSION" ]; then \
-	    SHELLRC=~/.zshrc; \
-	elif [ -n "$$FISH_VERSION" ]; then \
-	    SHELLRC=~/.config/fish/config.fish; \
-	else \
-	    SHELLRC=~/.profile; \
-	fi; \
-	if ! grep -qxF 'export PATH="$(PREFIX):$$PATH"' $$SHELLRC 2>/dev/null; then \
-	    if [ "$$SHELLRC" = "~/.config/fish/config.fish" ]; then \
-	        echo 'set -gx PATH $(PREFIX) $$PATH' >> $$SHELLRC; \
-	    else \
-	        echo 'export PATH="$(PREFIX):$$PATH"' >> $$SHELLRC; \
-	    fi; \
-	    echo "PATH updated in $$SHELLRC"; \
-	fi
-
-	# Update PATH in current session so 'ms' can be used immediately
-	@case "$$SHELL" in \
-	    */bash|*/zsh) export PATH="$(PREFIX):$$PATH";; \
-	    */fish) set -gx PATH $(PREFIX) $$PATH;; \
-	    *) export PATH="$(PREFIX):$$PATH";; \
-	esac
-	@echo "Done! '$(TARGET)' is now available immediately and after future logins."
+install: $(SRC)
+	@echo ""
+	@echo "$(CYAN)$(BOLD)Compiling minesweeper...$(RESET)"
+	@$(CC) $(SRC) $(CFLAGS) -o $(TARGET)
+	@echo "$(BLUE)Installing to $(INSTALL_DIR)...$(RESET)"
+	@sudo mv $(TARGET) $(INSTALL_DIR)/$(TARGET)
+	@echo ""
+	@echo "$(GREEN)$(BOLD)✓ Successfully installed!$(RESET)"
+	@echo "$(GREEN)  → Run '$(BOLD)ms$(RESET)$(GREEN)' to play$(RESET)"
+	@echo ""
 
 clean:
-	rm -f $(TARGET)
+	@sudo rm -f $(INSTALL_DIR)/$(TARGET)
+	@echo ""
+	@echo "$(GREEN)✓ Removed $(INSTALL_DIR)/$(TARGET)$(RESET)"
+	@echo ""
+
+help:
+	@echo ""
+	@echo "$(BOLD)Minesweeper Makefile$(RESET)"
+	@echo ""
+	@echo "$(CYAN)Usage:$(RESET)"
+	@echo "  $(BOLD)make$(RESET)          - Compile and install to /usr/bin (requires sudo)"
+	@echo "  $(BOLD)make install$(RESET)  - Same as above"
+	@echo "  $(BOLD)make clean$(RESET)    - Remove installed binary"
+	@echo "  $(BOLD)make help$(RESET)     - Show this help message"
+	@echo ""
