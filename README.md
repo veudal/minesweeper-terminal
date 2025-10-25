@@ -80,6 +80,7 @@ Examples:
 
 **Notes:**
 
+- **For the best experience**, set the terminal color scheme to **Linux** or **Tango**.
 - Revealing a number cell with all adjacent flags automatically reveals safe cells (**auto-chord**).  
 - Flagging all remaining mines around a number cell will automatically mark the rest (**auto-flag**).  
 - Timer starts on the first move.  
