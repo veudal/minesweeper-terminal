@@ -74,7 +74,7 @@ Examples:
 |-------------------------------|-------------------------|
 | Move cursor                   | Arrow keys, WASD         |
 | Reveal a cell                 | Space, K                 |
-| Flag/unflag a cell            | F, J                     |
+| Flag/unflag a cell            | F, L                     |
 | Restart the game              | R                        |
 | Quit the game                 | Q                        |
 
