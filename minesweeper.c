@@ -205,7 +205,7 @@ void draw_board(){
 }
 
 int main(int argc,char **argv){
-    setlocale(LC_ALL,"");
+    setlocale(LC_ALL, "C.UTF-8");
     int mine_percent=15;
     if(argc>=2){int a=atoi(argv[1]); if(a>0) rows=cols=a;}
     if(argc>=3){int a=atoi(argv[1]),b=atoi(argv[2]); if(a>0) rows=a; if(b>0) cols=b;}
