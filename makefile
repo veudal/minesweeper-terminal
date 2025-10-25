@@ -12,6 +12,13 @@ CYAN = \033[0;36m
 BOLD = \033[1m
 RESET = \033[0m
 
+# Check if running as root
+ifeq ($(shell [ $$(id -u) -eq 0 ] && echo root),root)
+SUDO =
+else
+SUDO = sudo
+endif
+
 .PHONY: all install clean help
 
 all: install
@@ -21,22 +28,14 @@ install: $(SRC)
 	@echo "$(CYAN)$(BOLD)Compiling minesweeper...$(RESET)"
 	@$(CC) $(SRC) $(CFLAGS) -o $(TARGET)
 	@echo "$(BLUE)Installing to $(INSTALL_DIR)...$(RESET)"
-	@if [ "$(id -u)" -eq 0 ]; then \
-		mv $(TARGET) $(INSTALL_DIR)/$(TARGET); \
-	else \
-		sudo mv $(TARGET) $(INSTALL_DIR)/$(TARGET); \
-	fi
+	@$(SUDO) mv $(TARGET) $(INSTALL_DIR)/$(TARGET)
 	@echo ""
 	@echo "$(GREEN)$(BOLD)✓ Successfully installed!$(RESET)"
 	@echo "$(GREEN)  → Run '$(BOLD)ms$(RESET)$(GREEN)' to play$(RESET)"
 	@echo ""
 
 clean:
-	@if [ "$(id -u)" -eq 0 ]; then \
-		rm -f $(INSTALL_DIR)/$(TARGET); \
-	else \
-		sudo rm -f $(INSTALL_DIR)/$(TARGET); \
-	fi
+	@$(SUDO) rm -f $(INSTALL_DIR)/$(TARGET)
 	@echo ""
 	@echo "$(GREEN)✓ Removed $(INSTALL_DIR)/$(TARGET)$(RESET)"
 	@echo ""
