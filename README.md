@@ -7,10 +7,10 @@ Fully functional minesweeper TUI with colors, timer, auto-flag, auto-chord and c
 ## Install prerequisites for Debian/Ubuntu-based systems
 ```
 sudo apt update && sudo apt upgrade -y # Update system to ensure a successfull installation of the packages
-sudo apt install gcc
-sudo apt install make
-sudo apt install git
-sudo apt install libxml2
+sudo apt install gcc -y
+sudo apt install make -y
+sudo apt install git -y
+sudo apt install libncurses-dev -y
 ```
 
 # How to install (recommended for easy access via 'ms' command)
