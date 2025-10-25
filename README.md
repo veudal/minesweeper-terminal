@@ -6,6 +6,7 @@ Fully functional minesweeper TUI with colors, timer, auto-flag, auto-chord and c
 
 ## Install prerequisites for Debian/Ubuntu-based systems
 ```
+sudo apt update && sudo apt upgrade -y # Update system to ensure a successfull installation of the packages
 sudo apt install gcc
 sudo apt install git
 sudo apt install libxml2
