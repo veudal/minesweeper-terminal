@@ -14,7 +14,7 @@ sudo apt install gcc
 ```
 git clone https://github.com/veudal/minesweeper-terminal.git
 cd minesweeper-terminal
-sudo make install
+make install
 ```
 
 # How to build the file yourself
