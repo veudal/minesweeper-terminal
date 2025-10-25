@@ -21,14 +21,22 @@ install: $(SRC)
 	@echo "$(CYAN)$(BOLD)Compiling minesweeper...$(RESET)"
 	@$(CC) $(SRC) $(CFLAGS) -o $(TARGET)
 	@echo "$(BLUE)Installing to $(INSTALL_DIR)...$(RESET)"
-	@sudo mv $(TARGET) $(INSTALL_DIR)/$(TARGET)
+	@if [ "$(id -u)" -eq 0 ]; then \
+		mv $(TARGET) $(INSTALL_DIR)/$(TARGET); \
+	else \
+		sudo mv $(TARGET) $(INSTALL_DIR)/$(TARGET); \
+	fi
 	@echo ""
 	@echo "$(GREEN)$(BOLD)✓ Successfully installed!$(RESET)"
 	@echo "$(GREEN)  → Run '$(BOLD)ms$(RESET)$(GREEN)' to play$(RESET)"
 	@echo ""
 
 clean:
-	@sudo rm -f $(INSTALL_DIR)/$(TARGET)
+	@if [ "$(id -u)" -eq 0 ]; then \
+		rm -f $(INSTALL_DIR)/$(TARGET); \
+	else \
+		sudo rm -f $(INSTALL_DIR)/$(TARGET); \
+	fi
 	@echo ""
 	@echo "$(GREEN)✓ Removed $(INSTALL_DIR)/$(TARGET)$(RESET)"
 	@echo ""
